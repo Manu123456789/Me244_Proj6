@@ -1,0 +1,807 @@
+%===============================%
+%============Variables==========%
+%===============================%
+% Course number, title, and semester
+\newcommand{\coursenumber}{ME144/244}
+\newcommand{\coursetitle}{Modeling, Simulation, and Digital Twins of Drone-Based Systems}
+\newcommand{\semester}{Fall 2026}
+
+% Author(s) and email(s)
+\newcommand{\authorA}{Professor Tarek I. Zohdi}
+\newcommand{\emailA}{zohdi@berkeley.edu}
+\newcommand{\authorB}{Armen Hanissian}
+\newcommand{\emailB}{armenh@berkeley.edu}
+\newcommand{\authorC}{Thomas Hosmer}
+\newcommand{\emailC}{tommyhosmer@berkeley.edu}
+% University and department
+\newcommand{\university}{University of California, Berkeley}
+\newcommand{\department}{Department of Mechanical Engineering}
+
+% Due date
+\newcommand{\duedate}{TBD}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ------------------ Package preamble.sty ------------------ %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%==============================%
+% ======= TOC Settings ======= %
+%==============================%
+% Document sectioning
+% -1	\part{part}
+%  0	\chapter{chapter}
+%  1	\section{section}
+%  2	\subsection{subsection}
+%  3	\subsubsection{subsubsection}
+%  4	\paragraph{paragraph}
+%  5	\subparagraph{subparagraph}
+\setcounter{secnumdepth}{0}
+
+%-----------------------------------%
+%---------Section font style--------%
+%-----------------------------------%
+\usepackage[immediate]{silence}
+\WarningFilter[temp]{latex}{Command}
+\usepackage{sectsty}
+\sectionfont{\centering}
+
+%-----------------------------------%
+%-----Table of contents titles------%
+%-----------------------------------%
+\renewcommand{\contentsname}{Contents}
+\renewcommand{\listfigurename}{Figures}
+\renewcommand{\listtablename}{Tables}
+% \renewcommand{\bibname}{References}
+
+%----------------------------------%
+%-----Table of contents style------%
+%----------------------------------%
+\usepackage{tocloft}
+\renewcommand{\cftpartfont}{\huge\bf}
+\renewcommand{\cftsecfont}{\large}
+\setlength{\cftbeforesecskip}{0.5em}
+\newcommand{\listofmaincontents}{%
+  \section*{Final Exam}
+  \sectionmark{Final Exam}
+  \@starttoc{mtc}
+}
+
+%=============================%
+% === All of the packages === %
+%=============================%
+
+%----------------------------%
+%-----------General----------%
+%----------------------------%
+\usepackage[shortlabels]{enumitem}
+\usepackage{cancel}
+
+%----------------------------%
+%------------Math------------%
+%----------------------------%
+\let\openbox\relax
+\usepackage{amsthm}
+\usepackage{amsmath}
+\allowdisplaybreaks
+\let\olddiv\div
+\usepackage{physics}
+\usepackage{mathtools}
+\usepackage{nicefrac}
+
+%----------------------------%
+%---Hyperref link settings---%
+%----------------------------%
+\usepackage[dvipsnames]{xcolor}
+\usepackage[hyperindex]{hyperref}
+\usepackage[openlevel=2]{bookmark}
+\definecolor{BerkeleyGold}{RGB}{193,129,45}
+\definecolor{Medalist}{HTML}{C4820E}
+\definecolor{BerkeleyBlueText}{RGB}{48,99,126}
+\definecolor{FoundersRock}{HTML}{3B7EA1}
+\definecolor{BerkeleyTableGold}{RGB}{222,157,46}
+\colorlet{BerkeleyTableGold2}{BerkeleyTableGold!50!white}
+\definecolor{CaliforniaGold}{HTML}{FDB515}
+\colorlet{CaliforniaTableGold}{CaliforniaGold!20!white}
+\definecolor{BerkeleyTableBlue1}{RGB}{207,226,234} % Light blue 
+\definecolor{BerkeleyTableBlue2}{RGB}{232,241,245} % Light blue (even lighter than BerkeleyTableBlue1)
+\definecolor{BerkeleyBlue}{HTML}{003262}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=BerkeleyBlueText, % toc + \ref{}'s
+    citecolor=BerkeleyBlueText, % citations
+    urlcolor=BerkeleyBlueText, % emails
+}
+
+%----------------------------%
+%-------Figure settings------%
+%----------------------------%
+\usepackage{graphicx}
+% Locations of images
+\graphicspath{ {/}, {./figures/} }
+
+%----------------------------%
+%------Caption settings------%
+%----------------------------%
+\usepackage{subcaption}
+\usepackage[font=normalsize,labelfont={bf,sc}]{caption}
+
+%----------------------------%
+%-------Table settings-------%
+%----------------------------%
+\usepackage{longtable}
+\usepackage{tabularx}
+\usepackage{booktabs}
+\usepackage{rotating}
+\usepackage{array}
+\usepackage{multirow}
+\newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\usepackage{makecell}
+
+%=============================%
+% ======= Page layout ======= %
+%=============================%
+
+%----------------------------%
+%---Margins, spacing, etc.---%
+%----------------------------%
+% Margins
+\usepackage[
+  top=0.75in,
+  bottom=0.75in,
+  left=0.5in,
+  right=0.5in
+]{geometry}
+% Paragraph indent size
+\setlength{\parindent}{2em}
+% For double spacing possibilities
+\usepackage{setspace}
+
+%---------------------------%
+%------Header & Footer------%
+%---------------------------%
+\usepackage{fancyhdr}
+\newcommand\partmark[1]{\markboth{#1}{}}
+\renewcommand{\sectionmark}[1]{\markright{#1}}  
+\renewcommand{\subsectionmark}[1]{}
+\renewcommand{\subsubsectionmark}[1]{}
+\fancypagestyle{mypagestyle}{%
+
+    % Fancy header
+    \fancyhead{}
+    \lhead{
+        \textsc{\coursetitle} 
+        \\
+        \textsc{\nouppercase\rightmark}
+    }
+    \rhead{
+        \textcolor{BerkeleyBlueText}{\textsc{\nouppercase\studentname}}
+        \\
+        \textsc{Due: \nouppercase\duedate}
+    }
+
+    % Fancy footer
+    \fancyfoot{}
+    % \fancyfoot[C]{\hyperref[toc]{\textsc{\thepage}}}
+    \fancyfoot[C]{\textsc{\thepage}}
+
+    % Header/footer lengths
+    \setlength{\headheight}{40pt}
+    \setlength{\headsep}{20pt}
+    \setlength{\footskip}{20pt}
+    % Header/footer rules
+    \renewcommand{\headrulewidth}{2pt}
+    \renewcommand{\footrulewidth}{2pt}
+    % \renewcommand{\headrule}{\hbox to\headwidth{%
+    %   \color{BerkeleyGold}\leaders\hrule height \headrulewidth\hfill}}
+    % \renewcommand{\footrule}{\hbox to\headwidth{%
+    %   \color{BerkeleyGold}\leaders\hrule height \footrulewidth\hfill}}
+}
+
+\fancypagestyle{myexamstyle}[mypagestyle]{%
+
+    % Fancy header
+    \fancyhead{}
+    \lhead{
+        \centerline{\textsc{Final Exam: \coursetitle}}
+        \\
+        \textsc{\nouppercase\rightmark}
+    }
+    \rhead{
+        \\
+        \textsc{Due: \nouppercase\duedate}
+    }
+
+}
+
+\fancypagestyle{mybasicstyle}[mypagestyle]{%
+
+    % Fancy header
+    \fancyhead{}
+    \lhead{\textsc{\coursetitle}}
+    \rhead{\textsc{\nouppercase\rightmark}}
+
+}
+
+\fancypagestyle{mytarekbasicstyle}[mypagestyle]{%
+
+    % Fancy header
+    \fancyhead{}
+    \lhead{
+        \textsc{\coursetitle} 
+        \\
+        \textsc{\nouppercase\rightmark}
+    }
+    \rhead{}
+}
+
+\fancypagestyle{justfootstyle}[mypagestyle]{%
+
+    % Clear fancy header
+    \fancyhead{}
+    \renewcommand{\headrulewidth}{0pt}
+
+}
+
+\fancypagestyle{frontmatterstyle}{%
+
+    % Fancy header
+    \fancyhead{}
+
+    % Fancy footer
+    \fancyfoot{}
+    \fancyfoot[C]{\thepage}
+
+    % Header/footer rules
+    \renewcommand{\headrulewidth}{0pt}
+    \renewcommand{\footrulewidth}{0pt}
+
+}
+
+%----------------------------%
+%--------Font settings-------%
+%----------------------------%
+% Font packages
+\usepackage{newpxtext}
+\usepackage[vvarbb]{newpxmath}
+\usepackage{pifont}
+\usepackage{dsfont}
+\usepackage{xcolor}
+
+%----------------------------%
+%------------Title-----------%
+%----------------------------%
+\newcommand*{\makemytitle}{%
+\begin{titlepage}
+    \begin{center}
+    % Blank space
+        \vspace*{4.0cm}     
+    % Course number
+        {\fontsize{30}{30}\textsc{\coursenumber}}
+        \\[0.5cm]
+    % Course title
+        \begin{spacing}{2.0}
+            {\fontsize{24}{24}\textsc{\coursetitle}}
+        \end{spacing}
+        ~\\[0.5cm]
+    % Semester
+        {\fontsize{20}{20}\textsc{\semester}}
+        \\[1.0cm]
+    % Horizontal line
+        {\color{black}\rule{\textwidth}{0.1cm}}
+        \\[0.5cm] 
+    % Instructor
+        \begin{tabular}{@{}C{2in}C{2in}C{2in}@{}}
+            \multirow{2}{*}{\LARGE \textsc{Instructor}} 
+            &
+            \multicolumn{2}{c}{\LARGE \textsc{\authorA}} 
+            \\
+            &
+            \multicolumn{2}{c}{
+                \href{mailto:\emailA}{{\large\texttt{\emailA}}} 
+            }
+    % GSI(s)
+        % \\[0.5cm]
+        %     \multirow{2}{*}{\LARGE \textsc{GSIs}} 
+        %     &
+        %     {\LARGE \textsc{\authorB}} 
+        %     &
+        %     {\LARGE \textsc{\authorC}}
+        %     &
+        %     {\LARGE \textsc{\authorD}}
+        %     \\
+        %     &
+        %     \href{mailto:\emailB}{{\large\texttt{\emailB}}}
+        %     &
+        %     \href{mailto:\emailC}{{\large\texttt{\emailC}}}
+        %     &
+        %     \href{mailto:\emailD}{{\large\texttt{\emailD}}}
+        \\[0.5cm]
+            \multirow{4}{*}{\LARGE \textsc{GSIs}} 
+            &
+            {\LARGE \textsc{\authorB}} 
+            &
+            {\LARGE \textsc{\authorC}}
+            \\
+            &
+            \href{mailto:\emailB}{{\large\texttt{\emailB}}}
+            &
+            \href{mailto:\emailC}{{\large\texttt{\emailC}}}
+            \\
+            &
+            \multicolumn{2}{c}{\LARGE \textsc{\authorD}}
+            \\
+            &
+            \multicolumn{2}{c}{\href{mailto:\emailD}{{\large\texttt{\emailD}}}}
+
+        
+    % Resources
+        \\[0.5cm]
+            {\LARGE \textsc{Resources}} 
+            &
+            \multicolumn{2}{c}{
+                \href{https://www.gradescope.com/courses/1106268}{\Large\texttt{Gradescope}}, \quad 
+                \href{https://edstem.org/us/courses/85175/discussion}{\Large\texttt{Ed}}, \quad
+                \href{https://bcourses.berkeley.edu/courses/1547162}{\Large\texttt{bCourses}} 
+            }
+        \end{tabular}
+        \\[0.5cm]
+    % Department
+        \textsc{\Large \department}
+        \\[0.5cm]
+    % University
+        \textsc{\Large \university}
+        \\[0.25cm]
+    % Horizontal line
+        {\color{black}\rule{\textwidth}{0.1cm}}
+        \\[1.5cm]
+    % Logo(s)
+        \includegraphics[width=6in]{figures/logos/me.png}
+    \end{center}
+\end{titlepage}
+
+%===============================%
+%==========After Title==========%
+%===============================%
+\pagenumbering{roman}
+\pagestyle{frontmatterstyle}
+\phantomsection
+\label{toc}
+\tableofcontents
+\newpage 
+% \listoffigures
+% % \newpage
+% \listoftables
+% \listofalgorithms
+% \newpage
+\pagenumbering{arabic}
+\pagestyle{mypagestyle}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Package for code listings
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% NOTE: uses tcolorbox's native "listings" engine (not minted). minted
+% requires -shell-escape + pygmentize/latexminted, which Overleaf only
+% auto-enables when it sees a literal \usepackage{minted} in the source,
+% and even then the breakable listing capture needs an extra compile
+% pass -- both were causing "No verbatim file ... .listing" errors on
+% Overleaf. listings is pure LaTeX (bundled with every TeX distribution)
+% and needs no shell-escape, so it always compiles in one pass anywhere.
+\usepackage{listings}
+\usepackage{float}
+\usepackage{tcolorbox}
+\tcbuselibrary{listings,breakable,xparse,skins}
+\definecolor{bg}{gray}{0.95}
+\definecolor{codekeyword}{RGB}{0,0,180}
+\definecolor{codecomment}{RGB}{95,95,95}
+\definecolor{codestring}{RGB}{140,40,40}
+
+% Plain-text "language" for \begin{code}[text] blocks (e.g. console
+% output) -- listings has no built-in "text" language, so this just
+% renders it as unhighlighted monospace instead of erroring.
+\lstdefinelanguage{text}{}
+
+\lstdefinestyle{tcbcodestyle}{
+  basicstyle=\small\ttfamily,
+  keywordstyle=\color{codekeyword}\bfseries,
+  commentstyle=\color{codecomment}\itshape,
+  stringstyle=\color{codestring},
+  numbers=left,
+  numberstyle=\tiny\color{gray},
+  numbersep=10pt,
+  xleftmargin=20pt,
+  breaklines=true,
+  breakatwhitespace=false,
+  showstringspaces=false,
+  columns=fullflexible,
+  keepspaces=true,
+  tabsize=4,
+}
+
+% Syntax: \begin{code}[<language>][<title>]
+\DeclareTCBListing{code}{O{python} O{}}{%
+  breakable=true,
+  listing engine=listings,
+  listing only,
+  listing options={style=tcbcodestyle, language=#1},
+  arc=5pt,
+  colback=white,
+  colframe=BerkeleyBlue,
+  enhanced,
+  title={#2},
+  overlay={%
+    \begin{tcbclipinterior}
+      \fill[BerkeleyTableBlue1] (frame.south west) rectangle ([xshift=30pt]frame.north west);
+    \end{tcbclipinterior}
+  },
+}
+
+%----------------------------%
+%--Problem & Solution Boxes--%
+%----------------------------%
+\newcommand{\projectnum}{}
+\newcommand{\projecttitle}{}
+\newcommand{\projectshorttitle}{}
+\NewDocumentCommand{\project}{ m o m m d[] }{
+    \newpage
+    \gdef\projectnum{#1}
+    \gdef\projectshorttitle{#2}
+    \gdef\projecttitle{#3}
+    \gdef\duedate{#4}
+    \IfValueTF{#2}{
+        \section[Project \projectnum: \projectshorttitle]{Project \projectnum: \projecttitle} 
+    }{
+        \section{Project \projectnum: \projecttitle} 
+    }
+    \label{project\projectnum}
+    \IfValueTF{#5}{
+        \begin{center}\fcolorbox{red}{white}{\begin{minipage}{0.5\textwidth} 
+            \footnotesize \color{red} Please use a new page for each part of a problem. That will help your GSI and grader! See \texttt{Fall2026\_Project\_Instructions.pdf} in files on bcourses for additional instructions.
+        \end{minipage}}\end{center}
+    }{
+        \begin{center}
+            \fcolorbox{red}{white}{\footnotesize \color{red} Please use a new page for each part of a problem. That will help your GSI and grader!}
+        \end{center}
+    }
+}
+
+\NewDocumentCommand{\solution}{}{
+    \newpage
+    \section{Solution to Project \projectnum: \projecttitle} 
+    \label{solution\projectnum}
+}
+
+\NewDocumentCommand{\standalonesolution}{}{
+    \newpage
+    \documentclass[../me144_244_student.tex]{subfiles}
+    \section{Solution to Project \projectnum: \projecttitle} 
+    \label{solution\projectnum}
+}
+
+\newif\ifshowsolutions
+\showsolutionsfalse
+
+% ----- Version 1 ----- %
+% \NewTColorBox{answer}{ d[] +!O{}}{
+%   enhanced,
+%   arc=0pt,
+%   breakable=true,
+%   colframe=BerkeleyGold,
+%   colback=BerkeleyTableBlue2,
+%   attach title to upper=\quad,
+%   IfValueT={#1}{
+%     coltitle=BerkeleyBlue,
+%     detach title,
+%     fonttitle=\bfseries,
+%     title={#1}
+%   },
+%   #2
+% }
+
+
+% ----- Version 2 ----- %
+% \usepackage{environ}
+% \NewEnviron{answer}{%
+%   \ifshowsolutions
+%     \begin{tcolorbox}[
+%       enhanced,
+%       breakable,
+%       colframe=BerkeleyGold,
+%       colback=BerkeleyTableBlue2
+%     ]
+%       \BODY
+%     \end{tcolorbox}
+%   \fi
+% }
+
+% ----- Version 3 ----- %
+\usepackage{comment}
+\newenvironment{answer@show}{%
+  \tcolorbox[
+    enhanced,
+    breakable,
+    colframe=BerkeleyGold,
+    colback=BerkeleyTableBlue2
+  ]%
+}{%
+  \endtcolorbox
+}
+\newenvironment{answer@hide}{%
+  \comment
+}{%
+  \endcomment
+}
+\newenvironment{answer}{%
+  \ifshowsolutions
+    \expandafter\answer@show
+  \else
+    \expandafter\answer@hide
+  \fi
+}{%
+  \ifshowsolutions
+    \endanswer@show
+  \else
+    \endanswer@hide
+  \fi
+}
+
+%----------------------------%
+%-----Exam Q and A Boxes-----%
+%----------------------------%
+% \newcommand{\examsectiontitle}{}
+\NewDocumentCommand{\examsection}{ o m d[] }{
+    \newpage
+    % \gdef\examsectiontitle{#2}
+    \section*{#2} 
+    \IfValueTF{#1}{
+        \sectionmark{#1}
+        \addcontentsline{mtc}{section}{#1}
+        \addcontentsline{toc}{subsection}{#1}
+    }{
+        \sectionmark{#2}
+        \addcontentsline{mtc}{section}{#2}
+        \addcontentsline{toc}{subsection}{#2}
+    }
+    \IfValueT{#3}{\label{exam.#3}}
+}
+
+
+%----------------------------%
+%---Best loaded at the end---%
+%----------------------------%
+\usepackage{subfiles} 
+\usepackage[final]{pdfpages}
+
+%----------------------------%
+%----------Cleveref----------%
+%----------------------------%
+\usepackage[capitalize,noabbrev,nameinlink]{cleveref}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Math macros
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\df}[2]{\displaystyle\frac{#1}{#2}}
+
+%% Project 7 commands
+\providecommand{\UK}{I\!\!K}
+\providecommand{\UE}{I\!\!E}
+
+%% Bold uppercase letters
+\newcommand{\bA}{\mbox{\boldmath $A$}}
+\newcommand{\bB}{\mbox{\boldmath $B$}}
+\newcommand{\bC}{\mbox{\boldmath $C$}}
+\newcommand{\bD}{\mbox{\boldmath $D$}}
+\newcommand{\bE}{\mbox{\boldmath $E$}}
+\newcommand{\bF}{\mbox{\boldmath $F$}}
+\newcommand{\bG}{\mbox{\boldmath $G$}}
+\newcommand{\bH}{\mbox{\boldmath $H$}}
+\newcommand{\bI}{\mbox{\boldmath $I$}}
+\newcommand{\bJ}{\mbox{\boldmath $J$}}
+\newcommand{\bK}{\mbox{\boldmath $K$}}
+\newcommand{\bL}{\mbox{\boldmath $L$}}
+\newcommand{\bM}{\mbox{\boldmath $M$}}
+\newcommand{\bN}{\mbox{\boldmath $N$}}
+\newcommand{\bO}{\mbox{\boldmath $O$}}
+\newcommand{\bP}{\mbox{\boldmath $P$}}
+\newcommand{\bQ}{\mbox{\boldmath $Q$}}
+\newcommand{\bR}{\mbox{\boldmath $R$}}
+\newcommand{\bS}{\mbox{\boldmath $S$}}
+\newcommand{\bT}{\mbox{\boldmath $T$}}
+\newcommand{\bU}{\mbox{\boldmath $U$}}
+\newcommand{\bV}{\mbox{\boldmath $V$}}
+\newcommand{\bW}{\mbox{\boldmath $W$}}
+\newcommand{\bX}{\mbox{\boldmath $X$}}
+\newcommand{\bY}{\mbox{\boldmath $Y$}}
+\newcommand{\bZ}{\mbox{\boldmath $Z$}}
+
+% Bold lowercase letters
+\newcommand{\ba}{\mbox{\boldmath $a$}}
+\newcommand{\bb}{\mbox{\boldmath $b$}}
+\newcommand{\bc}{\mbox{\boldmath $c$}}
+\newcommand{\bd}{\mbox{\boldmath $d$}}
+\newcommand{\be}{\mbox{\boldmath $e$}}
+\newcommand{\bff}{\mbox{\boldmath $f$}}
+\newcommand{\bg}{\mbox{\boldmath $g$}}
+\newcommand{\bh}{\mbox{\boldmath $h$}}
+\newcommand{\bi}{\mbox{\boldmath $i$}}
+\newcommand{\bj}{\mbox{\boldmath $j$}}
+\newcommand{\bk}{\mbox{\boldmath $k$}}
+\newcommand{\bl}{\mbox{\boldmath $l$}}
+\newcommand{\bm}{\mbox{\boldmath $m$}}
+\newcommand{\bn}{\mbox{\boldmath $n$}}
+\newcommand{\bo}{\mbox{\boldmath $o$}}
+\newcommand{\bp}{\mbox{\boldmath $p$}}
+\newcommand{\bq}{\mbox{\boldmath $q$}}
+\newcommand{\br}{\mbox{\boldmath $r$}}
+\newcommand{\bs}{\mbox{\boldmath $s$}}
+\newcommand{\bt}{\mbox{\boldmath $t$}}
+\newcommand{\bu}{\mbox{\boldmath $u$}}
+\newcommand{\bv}{\mbox{\boldmath $v$}}
+\newcommand{\bw}{\mbox{\boldmath $w$}}
+\newcommand{\bx}{\mbox{\boldmath $x$}}
+\newcommand{\by}{\mbox{\boldmath $y$}}
+\newcommand{\bz}{\mbox{\boldmath $z$}}
+
+% Bold Greek
+\newcommand{\Balpha}{\mbox{\boldmath $\alpha$}}
+\newcommand{\Bbeta}{\mbox{\boldmath $\beta$}}
+\newcommand{\Bgamma}{\mbox{\boldmath $\gamma$}}
+\newcommand{\BGamma}{\mbox{\boldmath $\Gamma$}}
+\newcommand{\Bdelta}{\mbox{\boldmath $\delta$}}
+\newcommand{\BDelta}{\mbox{\boldmath $\Delta$}}
+\newcommand{\Bepsilon}{\mbox{\boldmath $\epsilon$}}
+\newcommand{\Bvarepsilon}{\mbox{\boldmath $\varepsilon$}}
+\newcommand{\Bzeta}{\mbox{\boldmath $\zeta$}}
+\newcommand{\Beta}{\mbox{\boldmath $\eta$}}
+\newcommand{\Btheta}{\mbox{\boldmath $\theta$}}
+\newcommand{\BTheta}{\mbox{\boldmath $\Theta$}}
+\newcommand{\Bvartheta}{\mbox{\boldmath $\vartheta$}}
+\newcommand{\Biota}{\mbox{\boldmath $\iota$}}
+\newcommand{\Bkappa}{\mbox{\boldmath $\kappa$}}
+\newcommand{\Blambda}{\mbox{\boldmath $\lambda$}}
+\newcommand{\BLambda}{\mbox{\boldmath $\Lambda$}}
+\newcommand{\Bmu}{\mbox{\boldmath $\mu$}}
+\newcommand{\Bnu}{\mbox{\boldmath $\nu$}}
+\newcommand{\Bxi}{\mbox{\boldmath $\xi$}}
+\newcommand{\BXi}{\mbox{\boldmath $\Xi$}}
+\newcommand{\Bpi}{\mbox{\boldmath $\pi$}}
+\newcommand{\BPi}{\mbox{\boldmath $\Pi$}}
+\newcommand{\Bvarpi}{\mbox{\boldmath $\varpi$}}
+\newcommand{\Brho}{\mbox{\boldmath $\rho$}}
+\newcommand{\Bvarrho}{\mbox{\boldmath $\varrho$}}
+\newcommand{\Bsigma}{\mbox{\boldmath $\sigma$}}
+\newcommand{\BSigma}{\mbox{\boldmath $\Sigma$}}
+\newcommand{\Bvarsigma}{\mbox{\boldmath $\varsigma$}}
+\newcommand{\Btau}{\mbox{\boldmath $\tau$}}
+\newcommand{\Bupsilon}{\mbox{\boldmath $\upsilon$}}
+\newcommand{\BUpsilon}{\mbox{\boldmath $\Upsilon$}}
+\newcommand{\Bphi}{\mbox{\boldmath $\phi$}}
+\newcommand{\BPhi}{\mbox{\boldmath $\Phi$}}
+\newcommand{\Bvarphi}{\mbox{\boldmath $\varphi$}}
+\newcommand{\Bchi}{\mbox{\boldmath $\chi$}}
+\newcommand{\Bpsi}{\mbox{\boldmath $\psi$}}
+\newcommand{\BPsi}{\mbox{\boldmath $\Psi$}}
+\newcommand{\Bomega}{\mbox{\boldmath $\omega$}}
+\newcommand{\BOmega}{\mbox{\boldmath $\Omega$}}
+
+% Caligraphy
+\newcommand{\cA}{{\mathcal{A}}}
+\newcommand{\cB}{{\mathcal{B}}}
+\newcommand{\cC}{{\mathcal{C}}}
+\newcommand{\cD}{{\mathcal{D}}}
+\newcommand{\cE}{{\mathcal{E}}}
+\newcommand{\cF}{{\mathcal{F}}}
+\newcommand{\cG}{{\mathcal{G}}}
+\newcommand{\cH}{{\mathcal{H}}}
+\newcommand{\cI}{{\mathcal{I}}}
+\newcommand{\cJ}{{\mathcal{J}}}
+\newcommand{\cK}{{\mathcal{K}}}
+\newcommand{\cL}{{\mathcal{L}}}
+\newcommand{\cM}{{\mathcal{M}}}
+\newcommand{\cN}{{\mathcal{N}}}
+\newcommand{\cO}{{\mathcal{O}}}
+\newcommand{\cP}{{\mathcal{P}}}
+\newcommand{\cQ}{{\mathcal{Q}}}
+\newcommand{\cR}{{\mathcal{R}}}
+\newcommand{\cS}{{\mathcal{S}}}
+\newcommand{\cT}{{\mathcal{T}}}
+\newcommand{\cU}{{\mathcal{U}}}
+\newcommand{\cV}{{\mathcal{V}}}
+\newcommand{\cW}{{\mathcal{W}}}
+\newcommand{\cX}{{\mathcal{X}}}
+\newcommand{\cY}{{\mathcal{Y}}}
+\newcommand{\cZ}{{\mathcal{Z}}}
+
+% Blackboard
+\newcommand{\IA}{{\mathbb{A}}}
+\newcommand{\IB}{{\mathbb{B}}}
+\newcommand{\IC}{{\mathbb{C}}}
+\newcommand{\ID}{{\mathbb{D}}}
+\newcommand{\IE}{{\mathbb{E}}}
+\newcommand{\IF}{{\mathbb{F}}}
+\newcommand{\IG}{{\mathbb{G}}}
+\newcommand{\IH}{{\mathbb{H}}}
+\newcommand{\II}{{\mathbb{I}}}
+\newcommand{\IJJ}{{\mathbb{J}}}
+\newcommand{\IK}{{\mathbb{K}}}
+\newcommand{\IL}{{\mathbb{L}}}
+\newcommand{\IM}{{\mathbb{M}}}
+\newcommand{\IN}{{\mathbb{N}}}
+\newcommand{\IO}{{\mathbb{O}}}
+\newcommand{\IP}{{\mathbb{P}}}
+\newcommand{\IQ}{{\mathbb{Q}}}
+\newcommand{\IR}{{\mathbb{R}}}
+\newcommand{\IS}{{\mathbb{S}}}
+\newcommand{\IT}{{\mathbb{T}}}
+\newcommand{\IU}{{\mathbb{U}}}
+\newcommand{\IV}{{\mathbb{V}}}
+\newcommand{\IW}{{\mathbb{W}}}
+\newcommand{\IX}{{\mathbb{X}}}
+\newcommand{\IY}{{\mathbb{Y}}}
+\newcommand{\IZ}{{\mathbb{Z}}}
+
+% Bold lowercase letters
+\newcommand{\bfa}{{\mathbf{a}}}
+\newcommand{\bfb}{{\mathbf{b}}}
+\newcommand{\bfc}{{\mathbf{c}}}
+\newcommand{\bfd}{{\mathbf{d}}}
+\newcommand{\bfe}{{\mathbf{e}}}
+\newcommand{\bfff}{{\mathbf{f}}}
+\newcommand{\bfg}{{\mathbf{g}}}
+\newcommand{\bfh}{{\mathbf{h}}}
+\newcommand{\bfi}{{\mathbf{i}}}
+\newcommand{\bfj}{{\mathbf{j}}}
+\newcommand{\bfk}{{\mathbf{k}}}
+\newcommand{\bfl}{{\mathbf{l}}}
+\newcommand{\bfm}{{\mathbf{m}}}
+\newcommand{\bfn}{{\mathbf{n}}}
+\newcommand{\bfo}{{\mathbf{o}}}
+\newcommand{\bfp}{{\mathbf{p}}}
+\newcommand{\bfq}{{\mathbf{q}}}
+\newcommand{\bfr}{{\mathbf{r}}}
+\newcommand{\bfs}{{\mathbf{s}}}
+\newcommand{\bft}{{\mathbf{t}}}
+\newcommand{\bfu}{{\mathbf{u}}}
+\newcommand{\bfv}{{\mathbf{v}}}
+\newcommand{\bfw}{{\mathbf{w}}}
+\newcommand{\bfx}{{\mathbf{x}}}
+\newcommand{\bfy}{{\mathbf{y}}}
+\newcommand{\bfz}{{\mathbf{z}}}
+
+% Bold uppercase letters
+\newcommand{\bfA}{{\mathbf{A}}}
+\newcommand{\bfB}{{\mathbf{B}}}
+\newcommand{\bfC}{{\mathbf{C}}}
+\newcommand{\bfD}{{\mathbf{D}}}
+\newcommand{\bfE}{{\mathbf{E}}}
+\newcommand{\bfF}{{\mathbf{F}}}
+\newcommand{\bfG}{{\mathbf{G}}}
+\newcommand{\bfH}{{\mathbf{H}}}
+\newcommand{\bfI}{{\mathbf{I}}}
+\newcommand{\bfJ}{{\mathbf{J}}}
+\newcommand{\bfK}{{\mathbf{K}}}
+\newcommand{\bfL}{{\mathbf{L}}}
+\newcommand{\bfM}{{\mathbf{M}}}
+\newcommand{\bfN}{{\mathbf{N}}}
+\newcommand{\bfO}{{\mathbf{O}}}
+\newcommand{\bfP}{{\mathbf{P}}}
+\newcommand{\bfQ}{{\mathbf{Q}}}
+\newcommand{\bfR}{{\mathbf{R}}}
+\newcommand{\bfS}{{\mathbf{S}}}
+\newcommand{\bfT}{{\mathbf{T}}}
+\newcommand{\bfU}{{\mathbf{U}}}
+\newcommand{\bfV}{{\mathbf{V}}}
+\newcommand{\bfW}{{\mathbf{W}}}
+\newcommand{\bfX}{{\mathbf{X}}}
+\newcommand{\bfY}{{\mathbf{Y}}}
+\newcommand{\bfZ}{{\mathbf{Z}}}
+\newcommand{\define}{\stackrel{\rm def}{=}}
+
+\newcommand{\TODO}{\textcolor{red}{TODO }}
