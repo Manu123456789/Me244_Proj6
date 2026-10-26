@@ -89,8 +89,8 @@ def lidarsim(surface, plot=True, focalLength=f):
     d0 = d0 / np.linalg.norm(d0, axis=1)[:, np.newaxis]
 
     # TODO: All rays start at the emitter position (idealization) and move with speed c along d0
-    # r = ...
-    # v = ...
+    r = np.tile(emitter, (nRays, 1))  
+    v = c * d0  
 
     # Tracking arrays
     active = np.ones(nRays, dtype=bool)
