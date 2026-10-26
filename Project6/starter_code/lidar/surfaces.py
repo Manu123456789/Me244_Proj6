@@ -43,7 +43,7 @@ def surfG(x1, x2, A):
     FILL IN: Implement the surface height equation (eqn. 1)
     """
     # TODO: Uncomment and complete this line
-    # return 2 + A * np.sin(...) * np.sin(...)
+    return 2 + A * np.sin(omega1 * x1 / L1) * np.sin(omega2 * x2 / L2)
 
 
 
@@ -72,9 +72,9 @@ def gradG(x1, x2, A):
     Hint: Use chain rule and derivative of sin(u) = cos(u) * du/dx
     """
     # TODO: Compute gradGx = delG/delx_1
-    # gradGx = ...
+    gradGx = A * ((2 * omega1 * np.pi) / L1) * np.cos((2 * omega1 * np.pi * x1) / L1) * np.sin((2 * omega2 * np.pi * x2) / L2)
 
     # TODO: Compute gradGy = delG/delx_2
-    # gradGy = ...
+    gradGy = A * ((2 * omega2 * np.pi) / L2) * np.sin((2 * omega1 * np.pi * x1) / L1) * np.cos((2 * omega2 * np.pi * x2) / L2)
 
     return [gradGx, gradGy]
