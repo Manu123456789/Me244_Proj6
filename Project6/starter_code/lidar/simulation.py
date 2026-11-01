@@ -105,19 +105,20 @@ def lidarsim(surface, plot=True, focalLength=f):
 
         # TODO: find indices of active rays at or below the surface
         # HINT: surfG() gives us surface height at x,y positions, compare this to the ray's height
-        # idx = ...
+        idx = np.where((r[:,2] <= surfG(r[:,0], r[:,1], A_[surface])) & active)[0]
 
         if idx.size != 0:
             # TODO: Compute the unit normal n (pointing down, into the surface) at the
             # intersection points.
             # HINT: the normal is (dG/dx, dG/dy, -1), normalized
-            # n = ...
+            n = np.array(gradG(r[idx,0], r[idx,1], A_[surface]) + [-np.ones(len(idx))]).T
+            n = n / np.linalg.norm(n, axis=1)[:, np.newaxis]
 
             # TODO: Compute v . n for these rays. A ray is only reflecting if it is moving INTO the
             # surface (v . n > 0).
-            # vdotn = ...
-            # entering = ...
-            # idx, n, vdotn = idx[entering], n[entering], vdotn[entering]
+            vdotn = np.sum(v[idx] * n, axis=1)
+            entering = vdotn > 0
+            idx, n, vdotn = idx[entering], n[entering], vdotn[entering]
 
             # Rays that have used up their allowed bounces are lost
             spent = rfln[idx] >= maxBounces
@@ -128,7 +129,7 @@ def lidarsim(surface, plot=True, focalLength=f):
             rfln[idx] += 1
 
             # TODO: Specular reflection (law of reflection): v_ref = v - 2 (v . n) n  (n is a unit vector)
-            # vSpec = ...
+            vSpec = v[idx] - 2 * vdotn[:, np.newaxis] * n
 
             # Diffuse (Lambertian) reflection: the ray leaves in a random direction about the
             # outward normal m = -n, with probability proportional to cos(angle from m)
@@ -150,20 +151,21 @@ def lidarsim(surface, plot=True, focalLength=f):
         # TODO: Forward Euler time stepping - update ray positions
         # ONLY for active rays
         time += dt
-        # r[...] += ...
+        r[active] += v[active] * dt
 
         # Detection: an active ray that has crossed the lens plane going up (z > z0)
-        # idx = ...
+        idx = np.where(active & (r[:, 2] > z0))[0]
         # TODO: Of these, find the rays inside the lens aperture, a circle of apertureRadius^2
-        # det = ...
-        # rtrn[det] = True
+        det = np.sum(r[idx, :2]**2, axis=1) < apertureRadius**2
+        rtrn[idx[det]] = True
+
         # TODO: Store the crossing time. The ray overshot the plane z = z0 by (z - z0) during the
         # last step, so remove the time spent overshooting the plane.
-        # tj[det] = ...
-        # rj[det, :] = ...
-        # uj[det, :] = ...  (unit direction v / c)
+        tj[idx[det]] = time - (r[idx[det], 2] - z0) / v[idx[det], 2]
+        rj[idx[det], :] = r[idx[det], :]
+        uj[idx[det], :] = v[idx[det], :] / c
         # TODO: Rays that crossed the plane are no longer active (inside the aperture or not)
-        # active[idx] = ...
+        active[idx] = False
 
         # Rays that leave the sensor domain are lost (given)
         outside = np.logical_or(np.abs(r[:, 0]) > domainMax, np.abs(r[:, 1]) > domainMax)
@@ -224,17 +226,17 @@ def lidarsim(surface, plot=True, focalLength=f):
 
     # TODO: Range of each pixel with a return from its round-trip time (emitter and receiver are
     # at the same place), then the 3D point along that pixel's viewing direction
-    # R = ...
-    # rp = ...
+    R = (tPix * c) / 2
+    rp = emitter + R[:, np.newaxis] * dPix
 
     # Store the range image (NaN = pixel with no return) for the comparison in reference.py (given)
     rangeMap[surface] = np.full(nPix * nPix, np.nan)
-    rangeMap[surface][hit] = R
+    rangeMap[surface][hit] = R[hit]
     pointCloud[surface] = rp
     opticsUsed[surface] = {'f': f, 'sensorDist': sensorDist, 'tanHalfFOV': tanHalfFOV}
 
     # TODO: Compute error (fraction of pixels with NO return)
-    # error[surface] = ...
+    error[surface] = np.sum(~hit) / hit.size
 
     # Point-cloud reconstruction plot
     if plot:
