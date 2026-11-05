@@ -36,7 +36,7 @@ sensorDist = f * focusDist / (focusDist - f)    # lens to focal plane array dist
 pixelPitch = 4e-3                               # pixel size (m); with nPix this sets the field of view
 nPix = 32                                       # pixels per side of the (square) focal plane array
 apertureRadius = 0.1                            # lens aperture radius in the plane z = z0 (m)
-diffuseFraction = 1.0                           # fraction of reflections that are diffuse (0 = mirror)
+diffuseFraction = 0.0                           # fraction of reflections that are diffuse (0 = mirror)
 maxBounces = 10                                 # safety limit: rays that would reflect more times are lost
 tanHalfFOV = nPix * pixelPitch / (2 * sensorDist)   # tan of the half field of view
 emitter = np.array([0.0, 0.0, z0])              # point emitter, co-located with the lens center

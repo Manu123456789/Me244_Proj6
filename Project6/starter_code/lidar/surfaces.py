@@ -43,7 +43,7 @@ def surfG(x1, x2, A):
     FILL IN: Implement the surface height equation (eqn. 1)
     """
     # TODO: Uncomment and complete this line
-    return 2 + A * np.sin(omega1 * x1 / L1) * np.sin(omega2 * x2 / L2)
+    return 2 + A * np.sin(2 * omega1 * np.pi * x1 / L1) * np.sin(2 * omega2 * np.pi * x2 / L2)
 
 
 
